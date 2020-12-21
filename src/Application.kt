@@ -1,12 +1,15 @@
 package com.kuckjwi.ktor
 
-import com.fasterxml.jackson.databind.SerializationFeature
+import com.kuckjwi.ktor.domain.dto.Post
 import io.ktor.application.*
 import io.ktor.features.*
-import io.ktor.jackson.*
+import io.ktor.gson.*
+import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -14,9 +17,8 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 fun Application.module() {
     // install
     install(ContentNegotiation) {
-        // jackson
-        jackson {
-            enable(SerializationFeature.INDENT_OUTPUT)
+        gson {
+            setPrettyPrinting()
         }
     }
     // route
@@ -32,6 +34,13 @@ fun Application.module() {
                     "query-params" to call.request.queryParameters.toMap()
                 )
             )
+        }
+        post("/posts") {
+            // https://youtrack.jetbrains.com/issue/KTOR-1286
+            withContext(Dispatchers.IO) {
+                val post = call.receive<Post>()
+                call.respond(post)
+            }
         }
     }
 }
