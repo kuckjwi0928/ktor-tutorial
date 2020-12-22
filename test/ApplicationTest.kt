@@ -1,9 +1,6 @@
 package com.kuckjwi.ktor
 
 import io.ktor.http.*
-import io.ktor.html.*
-import kotlinx.html.*
-import kotlinx.css.*
 import kotlin.test.*
 import io.ktor.server.testing.*
 

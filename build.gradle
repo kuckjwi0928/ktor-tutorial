@@ -35,5 +35,19 @@ dependencies {
     implementation "io.ktor:ktor-gson:$ktor_version"
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.ktor:ktor-server-core:$ktor_version"
+    implementation "mysql:mysql-connector-java:8.0.22"
+    implementation "org.jetbrains.exposed:exposed:0.17.7"
+    implementation "org.kodein.di:kodein-di-framework-ktor-server-jvm:7.1.0"
+    implementation "com.zaxxer:HikariCP:3.4.5"
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
+}
+
+
+compileKotlin {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
+    kotlinOptions {
+        jvmTarget = '11'
+    }
 }
